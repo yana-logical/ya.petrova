@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication6
+namespace Exercise3._1
 {
     class Program
     {
-
         //Сделать методы для считывания целых чисел, дробных чисел.
         //Сделать методы для вывода на консоль этих типов данных,
         //массивов целых и дробных чисел (можно доработать любое ДЗ).
@@ -52,7 +51,7 @@ namespace ConsoleApplication6
 
         static void Main(string[] args)
         {
-            
+
 
         }
     }
