@@ -14,10 +14,10 @@ namespace Exercise3._1
 
         public static int GetInt()
         {
-            int Number;
-            if (int.TryParse(Console.ReadLine(), out Number))
+            int number;
+            if (int.TryParse(Console.ReadLine(), out number))
             {
-                return Number;
+                return number;
             }
             return 0;
         }
@@ -25,34 +25,77 @@ namespace Exercise3._1
 
         public static double GetDouble()
         {
-            double Number;
-            if (double.TryParse(Console.ReadLine(), out Number))
+            double number;
+            if (double.TryParse(Console.ReadLine(), out number))
             {
-                return Number;
+                return number;
             }
             return 0;
         }
 
 
-        public static void Print(int Number)
+        public static void Print(int number)
         {
-            Console.WriteLine(Number);
+            Console.WriteLine(number);
         }
 
 
-        public static void Print(double Number)
+        public static void Print(double number)
         {
-            Console.WriteLine(Number);
+            Console.WriteLine(number);
         }
 
 
+        public static void Print(int[] array)
+        {
+            string strWrite = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                strWrite = strWrite + array[i] + " ";
+            }
+            Console.WriteLine(strWrite);
+        }
+
+
+        public static void Print(double[] array)
+        {
+            string strWrite = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                strWrite = strWrite + array[i] + " ";
+            }
+            Console.WriteLine(strWrite);
+        }
 
 
 
         static void Main(string[] args)
         {
+            int number;
+            Random random = new Random();
 
+            Console.WriteLine("Введите размер массива");
+            number = GetInt();
 
+            if (number > 0) 
+            {
+                int[] array = new int[number];
+
+                for (int i = 0; i < number; i++)
+                {
+                    array[i] = random.Next(50);
+                }
+
+                Console.WriteLine("\n\rСгенеренный массив:");
+                Print(array);
+            }
+
+            else
+            {
+                Console.WriteLine("\n\rВведена некорректная длина");
+            }
+
+            Console.ReadKey();
         }
     }
 }
