@@ -25,35 +25,34 @@ namespace Exercise3._3
         {
             int stopValue = -1;
             int value = stopValue+1;
-            bool sign = false;
-            Dictionary<int, int> symbols = new Dictionary<int, int>();
+            List<int> symbolsAll = new List<int>();
+            HashSet<int> symbolsDublicate = new HashSet<int>();
 
             Console.WriteLine("Введите числа через Enter\n\r");
 
             while (value != stopValue)
             {
                 value = GetInt();
-                if (!symbols.ContainsKey(value))
-                {
-                    symbols.Add(value, 1);
-                }
-                else
-                {
-                    symbols[value]++;
-                }
+                symbolsAll.Add(value);
             }
 
-            foreach (KeyValuePair<int, int> kvp in symbols)
+            for (int i = 0; i < symbolsAll.Count; i++)
             {
-                if (kvp.Value > 1)
+                if (i != symbolsAll.LastIndexOf(symbolsAll[i]))
                 {
-                    sign = true;
-                    Console.WriteLine("Число '{0}' повторяется", kvp.Key);
+                    symbolsDublicate.Add(symbolsAll[i]);
                 }
+                
             }
 
-
-            if (!sign)
+            if (symbolsDublicate.Count != 0)
+            {
+                foreach (int element in symbolsDublicate)
+                {
+                    Console.WriteLine("Число '{0}' повторяется", element);
+                }
+            }
+            else
             {
                 Console.WriteLine("Повторяющихся значений нет");
             }
