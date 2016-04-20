@@ -25,7 +25,7 @@ namespace Exercise3._3
         {
             int stopValue = -1;
             int value = stopValue+1;
-            List<int> symbolsAll = new List<int>();
+            HashSet<int> symbolsAll = new HashSet<int>();
             HashSet<int> symbolsDublicate = new HashSet<int>();
 
             Console.WriteLine("Введите числа через Enter\n\r");
@@ -33,17 +33,17 @@ namespace Exercise3._3
             while (value != stopValue)
             {
                 value = GetInt();
-                symbolsAll.Add(value);
+                if (symbolsAll.Contains(value))
+                {
+                    symbolsDublicate.Add(value);
+                }
+                else
+                {
+                    symbolsAll.Add(value);
+                }
             }
 
-            for (int i = 0; i < symbolsAll.Count; i++)
-            {
-                if (i != symbolsAll.LastIndexOf(symbolsAll[i]))
-                {
-                    symbolsDublicate.Add(symbolsAll[i]);
-                }
-                
-            }
+            
 
             if (symbolsDublicate.Count != 0)
             {
