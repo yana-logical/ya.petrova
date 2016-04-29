@@ -15,60 +15,6 @@ namespace Exercise5._2
     Реализовать метод закрытия счета. С закрытым счетом нельзя проводить никакие операции. Счет не может быть закрыт, если он имеет положительный баланс.*/
     class Program
     {
-        public static int GetInt()
-        {
-            int value;
-            if (int.TryParse(Console.ReadLine(), out value))
-            {
-                return value;
-            }
-            else
-            {
-                return 0;
-            }
-
-        }
-
-        public static double GetDouble()
-        {
-            double value;
-            if (double.TryParse(Console.ReadLine(), out value))
-            {
-                return value;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public static double GetPositiveDouble()
-        {
-            double value;
-            if (double.TryParse(Console.ReadLine(), out value))
-            {
-                if (value >= 0)
-                {
-                    return value;
-                }
-                return 0;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public static int lastMonth()
-        {
-            return (DateTime.Now.Month - 1 == 0) ? 12 : (DateTime.Now.Month - 1);
-        }
-
-        public static int yearLastMonth()
-        {
-            return (lastMonth() == 12) ? (DateTime.Now.Year - 1) : DateTime.Now.Year;
-        }
-
         static void Main(string[] args)
         {
         }

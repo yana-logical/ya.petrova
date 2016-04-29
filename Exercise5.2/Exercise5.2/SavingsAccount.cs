@@ -9,12 +9,12 @@ namespace Exercise5._2
     //сберегательный
     public class SavingsAccount
     {
-        string _number;
+        Guid _number;
         string _owner;
         double _sumAccount;
         string _status;
 
-        public SavingsAccount(string number, string owner, double sumAccount, string status)
+        public SavingsAccount(Guid number, string owner, double sumAccount, string status)
         {
             Number = number;
             Owner = owner;
@@ -24,19 +24,19 @@ namespace Exercise5._2
 
         public SavingsAccount()
         {
-            Number = Console.ReadLine();
+            Number = Guid.NewGuid();
             Owner = Console.ReadLine();
-            SumAccount = Program.GetPositiveDouble();
+            SumAccount = GetPositiveDouble();
             Status = "open";
 
         }
 
-        public string Number
+        public Guid Number
         {
             get { return _number; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
                     _number = value;
                 }
@@ -48,7 +48,7 @@ namespace Exercise5._2
             get { return _owner; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
                     _owner = value;
                 }
@@ -60,7 +60,7 @@ namespace Exercise5._2
             get { return _sumAccount; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
                     _sumAccount = value;
                 }
@@ -72,16 +72,23 @@ namespace Exercise5._2
             get { return _status; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
-                    _status = value;
+                    if (value == "open" || value == "closed")
+                    {
+                        _status = value;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Введено некорректное значение статуса");
+                    }
                 }
             }
         }
 
         public virtual void Refill(double value)
         {
-            if (GetStateAccount())
+            if (IsActiveAccount())
             {
                 SumAccount = SumAccount + value;
             }
@@ -89,7 +96,7 @@ namespace Exercise5._2
 
         public virtual void Withdrawals(double value)
         {
-            if (GetStateAccount())
+            if (IsActiveAccount())
             {
                 if (value <= SumAccount)
                 {
@@ -97,7 +104,7 @@ namespace Exercise5._2
                 }
                 else
                 {
-                    Console.WriteLine("Сумма изъятия больше остатка на счете");
+                    Console.WriteLine("Сумма изъятия {1} больше остатка на счете {2}", value, SumAccount);
                 }
             }
         }
@@ -110,11 +117,11 @@ namespace Exercise5._2
             }
             else
             {
-                 Console.WriteLine("Невозможно закрыть счет, т.к. его баланс положительный, Остаток на счете: {1}", SumAccount);
+                 Console.WriteLine("Невозможно закрыть счет, т.к. его баланс положительный. Остаток на счете: {1}", SumAccount);
             }
         }
 
-        public bool GetStateAccount()
+        public bool IsActiveAccount()
         {
             if (Status == "open")
             {
@@ -125,6 +132,35 @@ namespace Exercise5._2
                 Console.WriteLine("Операция невозможна. Счет закрыт");
                 return false;
             }
+        }
+
+        public static double GetPositiveDouble()
+        {
+            double value;
+            if (double.TryParse(Console.ReadLine(), out value))
+            {
+                if (value >= 0)
+                {
+                    return value;
+                }
+                return 0;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public static int LastMonth()
+        //Возращает номер предыдущего месяца
+        {
+            return (DateTime.Now.Month - 1 == 0) ? 12 : (DateTime.Now.Month - 1);
+        }
+
+        public static int YearLastMonth()
+        //Возращает номер года предыдущего месяца
+        {
+            return (LastMonth() == 12) ? (DateTime.Now.Year - 1) : DateTime.Now.Year;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Exercise5._2
     {
         double _accountMaintenance;
 
-        public CheckingAccount(string number, string owner, double sumAccount, string status,
+        public CheckingAccount(Guid number, string owner, double sumAccount, string status,
                                 double accountMaintenance) : base(number, owner, sumAccount, status)
         {
             AccountMaintenance = accountMaintenance;
@@ -19,7 +19,7 @@ namespace Exercise5._2
 
         public CheckingAccount()
         {
-            AccountMaintenance = Program.GetPositiveDouble();
+            AccountMaintenance = GetPositiveDouble();
         }
 
         public double AccountMaintenance
@@ -27,7 +27,7 @@ namespace Exercise5._2
             get { return _accountMaintenance; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
                     _accountMaintenance = value;
                 }
@@ -36,7 +36,7 @@ namespace Exercise5._2
 
         public void CancellationFeesForAccountMaintenance()
         {
-            if (GetStateAccount())
+            if (IsActiveAccount())
             {
                 if (SumAccount > AccountMaintenance)
                 {
@@ -47,7 +47,7 @@ namespace Exercise5._2
                 }
                 else
                 {
-                    Console.WriteLine("На счете недостаточно средств для списания платы за обслуживание");
+                    Console.WriteLine("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: {1}, размер платы: {2}.", SumAccount, AccountMaintenance);
                 }
             }
         }

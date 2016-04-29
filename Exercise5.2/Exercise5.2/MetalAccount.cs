@@ -12,7 +12,7 @@ namespace Exercise5._2
         string _metalType;
         double _amountGrams;
         double _costGram;
-        public MetalAccount(string number, string owner, double sumAccount, string status,
+        public MetalAccount(Guid number, string owner, double sumAccount, string status,
                                    string metalType, double amountGrams, double costGram) : base(number, owner, sumAccount, status)
         {
             MetalType = metalType;
@@ -23,8 +23,8 @@ namespace Exercise5._2
         public MetalAccount()
         {
             MetalType = Console.ReadLine();
-            AmountGrams = Program.GetPositiveDouble();
-            CostGram = Program.GetPositiveDouble();
+            AmountGrams = GetPositiveDouble();
+            CostGram = GetPositiveDouble();
         }
 
         public string MetalType
@@ -32,7 +32,7 @@ namespace Exercise5._2
             get { return _metalType; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
                     _metalType = value;
                 }
@@ -44,7 +44,7 @@ namespace Exercise5._2
             get { return _amountGrams; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
                     _amountGrams = value;
                 }
@@ -56,7 +56,7 @@ namespace Exercise5._2
             get { return _costGram; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
                     _costGram = value;
                 }
@@ -65,7 +65,7 @@ namespace Exercise5._2
 
         public override void Refill(double value)
         {
-            if (GetStateAccount())
+            if (IsActiveAccount())
             {
                 SumAccount = SumAccount + value;
                 AmountGrams = AmountGrams + value / CostGram;
@@ -75,7 +75,7 @@ namespace Exercise5._2
 
         public override void Withdrawals(double value)
         {
-            if (GetStateAccount())
+            if (IsActiveAccount())
             {
                 if (value <= SumAccount)
                 {
@@ -84,7 +84,7 @@ namespace Exercise5._2
                 }
                 else
                 {
-                    Console.WriteLine("Сумма изъятия больше остатка на счете");
+                    Console.WriteLine("Сумма изъятия {1} больше остатка на счете {2}", value, SumAccount);
                 }
             }
     }

@@ -9,30 +9,30 @@ namespace Exercise5._2
     //накопительный
     public class AccumulationAccount: SavingsAccount
     {
-        double _anInitialFee;
+        double _initialFee;
         double _interestRate;
 
-        public AccumulationAccount(string number, string owner, double sumAccount, string status,
-                                    double anInitialFee, double interestRate) : base(number, owner, sumAccount,status)
+        public AccumulationAccount(Guid number, string owner, double sumAccount, string status,
+                                    double initialFee, double interestRate) : base(number, owner, sumAccount,status)
         {
-            AnInitialFee = anInitialFee;
+            InitialFee = initialFee;
             InterestRate = interestRate;
         }
 
         public AccumulationAccount()
         {
-            AnInitialFee = Program.GetPositiveDouble();
-            InterestRate = Program.GetPositiveDouble();
+            InitialFee = GetPositiveDouble();
+            InterestRate = GetPositiveDouble();
         }
 
-        public double AnInitialFee
+        public double InitialFee
         {
-            get { return _anInitialFee; }
+            get { return _initialFee; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
-                    _anInitialFee = value;
+                    _initialFee = value;
                 }
             }
         }
@@ -42,7 +42,7 @@ namespace Exercise5._2
             get { return _interestRate; }
             set
             {
-                if (GetStateAccount())
+                if (IsActiveAccount())
                 {
                     _interestRate = value;
                 }
@@ -51,9 +51,9 @@ namespace Exercise5._2
 
         public override void Withdrawals(double value)
         {
-            if (GetStateAccount())
+            if (IsActiveAccount())
             {
-                if (value <= AnInitialFee)
+                if (SumAccount - value >= InitialFee)
                 {
                     if (value <= SumAccount)
                     {
@@ -61,26 +61,27 @@ namespace Exercise5._2
                     }
                     else
                     {
-                        Console.WriteLine("Сумма изъятия больше остатка на счете");
+                        Console.WriteLine("Сумма изъятия {1} больше остатка на счете {2}", value, SumAccount);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Сумма снятия больше первоначального взноса");
+                    Console.WriteLine("Изъятие средств в размере {1} невозможно, т.к. после него сумма на счете будет меньше первоначального взноса {2}. Текущий баланс: {3}",
+                                    value, InitialFee, SumAccount);
                 }
             }
         }
 
         public void InterestCapitalization()
         {
-            if (GetStateAccount())
+            if (IsActiveAccount())
             {
                 if (DateTime.Now.Day == 1)
                 {
 
-                    int countDayInYear = DateTime.IsLeapYear(Program.yearLastMonth()) ? 366 : 365;
-                    int countDayInMonth = DateTime.DaysInMonth(Program.yearLastMonth(), Program.lastMonth());
-                    SumAccount = SumAccount + SumAccount * AnInitialFee * countDayInMonth / (countDayInYear * 100);
+                    int countDayInYear = DateTime.IsLeapYear(YearLastMonth()) ? 366 : 365;
+                    int countDayInMonth = DateTime.DaysInMonth(YearLastMonth(), LastMonth());
+                    SumAccount = SumAccount + SumAccount * InitialFee * countDayInMonth / (countDayInYear * 100);
                 }
             }
         }
