@@ -39,6 +39,7 @@ namespace Exercise5._2
             }
             else
             {
+                AddLogs("Счет закрыт. Операция невозможна.");
                 return false;
             }
         }
@@ -57,6 +58,7 @@ namespace Exercise5._2
             }
             else
             {
+                AddLogs("Счет закрыт. Операция невозможна.");
                 return false;
             }
         }
@@ -86,6 +88,7 @@ namespace Exercise5._2
             }
             else
             {
+                AddLogs("Счет закрыт. Операция невозможна.");
                 return false;
             }
         }
@@ -109,10 +112,9 @@ namespace Exercise5._2
             }
             else
             {
+                AddLogs("Счет закрыт. Операция невозможна.");
                 return false;
             }
         }
-
-
     }
 }
