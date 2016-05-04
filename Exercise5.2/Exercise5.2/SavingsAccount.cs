@@ -13,7 +13,8 @@ namespace Exercise5._2
         string _owner;
         double _sumAccount;
         string _status;
-        List<string> _logs = new List<string>(); 
+        private List<string> _logs = new List<string>();
+        bool _successfulOperation;
 
         public SavingsAccount(Guid number, string owner, double sumAccount, string status)
         {
@@ -23,10 +24,11 @@ namespace Exercise5._2
             if (status == "open" || status == "closed")
             {
                 Status = status;
+                SuccessfulOperation = true;
             }
             else
             {
-                Console.WriteLine("Введено некорректное значение статуса");
+                AddLogs("Введено некорректное значение статуса");
             }
             
         }
@@ -83,20 +85,31 @@ namespace Exercise5._2
             {
                 if (IsActiveAccount())
                 {
-                    _status = value;
+                    if (_status == "open" || _status == "closed")
+                    {
+                        _status = value;
+                        SuccessfulOperation = true;
+                    }
+                    else
+                    {
+                        AddLogs("Введено некорректное значение статуса");
+                    }
                 }
             }
         }
 
-        public void AddLogs(string value)
+        protected void AddLogs(string value)
         {
             _logs.Add(Convert.ToString("[" + DateTime.Now + "] |" + GetType().Name + "| " + value));
+            SuccessfulOperation = false;
         }
 
         public List<string> GetLogs()
         {
             return _logs;
         }
+
+        public bool SuccessfulOperation { get; set; }
 
         public virtual void Refill(double value)
         {
@@ -113,6 +126,7 @@ namespace Exercise5._2
                 if (value <= SumAccount)
                 {
                     SumAccount = SumAccount - value;
+                    SuccessfulOperation = true;
                 }
                 else
                 {
@@ -126,6 +140,7 @@ namespace Exercise5._2
             if (SumAccount == 0)
             {
                 Status = "closed";
+                SuccessfulOperation = true;
             }
             else
             {

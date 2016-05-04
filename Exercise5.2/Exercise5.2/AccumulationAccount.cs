@@ -58,6 +58,7 @@ namespace Exercise5._2
                     if (value <= SumAccount)
                     {
                         SumAccount = SumAccount - value;
+                        SuccessfulOperation = true;
                     }
                     else
                     {

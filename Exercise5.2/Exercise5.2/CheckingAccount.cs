@@ -43,6 +43,7 @@ namespace Exercise5._2
                     if (DateTime.Now.Day == 1)
                     {
                         SumAccount = SumAccount - AccountMaintenance;
+                        SuccessfulOperation = true;
                     }
                 }
                 else

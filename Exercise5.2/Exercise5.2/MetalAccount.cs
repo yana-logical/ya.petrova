@@ -81,6 +81,7 @@ namespace Exercise5._2
                 {
                     SumAccount = SumAccount - value;
                     AmountGrams = AmountGrams - value / CostGram;
+                    SuccessfulOperation = true;
                 }
                 else
                 {
