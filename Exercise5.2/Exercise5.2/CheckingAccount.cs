@@ -47,7 +47,7 @@ namespace Exercise5._2
                 }
                 else
                 {
-                    Console.WriteLine("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: {1}, размер платы: {2}.", SumAccount, AccountMaintenance);
+                    AddLogs("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + SumAccount + ", размер платы: " + AccountMaintenance);
                 }
             }
         }

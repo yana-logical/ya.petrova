@@ -13,13 +13,22 @@ namespace Exercise5._2
         string _owner;
         double _sumAccount;
         string _status;
+        List<string> _logs = new List<string>(); 
 
         public SavingsAccount(Guid number, string owner, double sumAccount, string status)
         {
             Number = number;
             Owner = owner;
             SumAccount = sumAccount;
-            Status = status;
+            if (status == "open" || status == "closed")
+            {
+                Status = status;
+            }
+            else
+            {
+                Console.WriteLine("Введено некорректное значение статуса");
+            }
+            
         }
 
         public SavingsAccount()
@@ -74,16 +83,19 @@ namespace Exercise5._2
             {
                 if (IsActiveAccount())
                 {
-                    if (value == "open" || value == "closed")
-                    {
-                        _status = value;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Введено некорректное значение статуса");
-                    }
+                    _status = value;
                 }
             }
+        }
+
+        public void AddLogs(string value)
+        {
+            _logs.Add(Convert.ToString("[" + DateTime.Now + "] |" + GetType().Name + "| " + value));
+        }
+
+        public List<string> GetLogs()
+        {
+            return _logs;
         }
 
         public virtual void Refill(double value)
@@ -104,7 +116,7 @@ namespace Exercise5._2
                 }
                 else
                 {
-                    Console.WriteLine("Сумма изъятия {1} больше остатка на счете {2}", value, SumAccount);
+                    AddLogs("Сумма изъятия "+ value + " больше остатка на счете " + SumAccount);
                 }
             }
         }
@@ -117,7 +129,7 @@ namespace Exercise5._2
             }
             else
             {
-                 Console.WriteLine("Невозможно закрыть счет, т.к. его баланс положительный. Остаток на счете: {1}", SumAccount);
+                AddLogs("Невозможно закрыть счет, т.к. его баланс положительный. Остаток на счете: " + SumAccount);
             }
         }
 
@@ -129,7 +141,7 @@ namespace Exercise5._2
             }
             else
             {
-                Console.WriteLine("Операция невозможна. Счет закрыт");
+                AddLogs("Операция невозможна. Счет закрыт");
                 return false;
             }
         }
@@ -151,16 +163,16 @@ namespace Exercise5._2
             }
         }
 
-        public static int LastMonth()
+        public static int GetPreviousMonth()
         //Возращает номер предыдущего месяца
         {
             return (DateTime.Now.Month - 1 == 0) ? 12 : (DateTime.Now.Month - 1);
         }
 
-        public static int YearLastMonth()
+        public static int GetYearOfPreviousMonth()
         //Возращает номер года предыдущего месяца
         {
-            return (LastMonth() == 12) ? (DateTime.Now.Year - 1) : DateTime.Now.Year;
+            return (GetPreviousMonth() == 12) ? (DateTime.Now.Year - 1) : DateTime.Now.Year;
         }
     }
 }

@@ -84,7 +84,7 @@ namespace Exercise5._2
                 }
                 else
                 {
-                    Console.WriteLine("Сумма изъятия {1} больше остатка на счете {2}", value, SumAccount);
+                    AddLogs("Сумма изъятия " + value + " больше остатка на счете " + SumAccount);
                 }
             }
     }

@@ -61,13 +61,12 @@ namespace Exercise5._2
                     }
                     else
                     {
-                        Console.WriteLine("Сумма изъятия {1} больше остатка на счете {2}", value, SumAccount);
+                        AddLogs("Сумма изъятия " + value + " больше остатка на счете " + SumAccount);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Изъятие средств в размере {1} невозможно, т.к. после него сумма на счете будет меньше первоначального взноса {2}. Текущий баланс: {3}",
-                                    value, InitialFee, SumAccount);
+                    AddLogs("Изъятие средств в размере " + value + " невозможно, т.к. после него сумма на счете будет меньше первоначального взноса " + InitialFee + ". Текущий баланс: " + SumAccount);
                 }
             }
         }
@@ -79,8 +78,8 @@ namespace Exercise5._2
                 if (DateTime.Now.Day == 1)
                 {
 
-                    int countDayInYear = DateTime.IsLeapYear(YearLastMonth()) ? 366 : 365;
-                    int countDayInMonth = DateTime.DaysInMonth(YearLastMonth(), LastMonth());
+                    int countDayInYear = DateTime.IsLeapYear(GetYearOfPreviousMonth()) ? 366 : 365;
+                    int countDayInMonth = DateTime.DaysInMonth(GetYearOfPreviousMonth(), GetPreviousMonth());
                     SumAccount = SumAccount + SumAccount * InitialFee * countDayInMonth / (countDayInYear * 100);
                 }
             }
