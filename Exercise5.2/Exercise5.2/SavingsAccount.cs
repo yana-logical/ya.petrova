@@ -14,7 +14,6 @@ namespace Exercise5._2
         double _sumAccount;
         string _status;
         private List<string> _logs = new List<string>();
-        bool _successfulOperation;
 
         public SavingsAccount(Guid number, string owner, double sumAccount, string status)
         {
