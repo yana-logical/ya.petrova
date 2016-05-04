@@ -12,77 +12,104 @@ namespace Exercise5._2
         double _initialFee;
         double _interestRate;
 
-        public AccumulationAccount(Guid number, string owner, double sumAccount, string status,
-                                    double initialFee, double interestRate) : base(number, owner, sumAccount,status)
+        public AccumulationAccount(Guid number, string owner, double sumAccount, bool isActiveAccount,
+                                    double initialFee, double interestRate) : base(number, owner, sumAccount, isActiveAccount)
         {
-            InitialFee = initialFee;
-            InterestRate = interestRate;
+            _initialFee = initialFee;
+            _interestRate = interestRate;
         }
 
         public AccumulationAccount()
         {
-            InitialFee = GetPositiveDouble();
-            InterestRate = GetPositiveDouble();
+            _initialFee = GetPositiveDouble();
+            _interestRate = GetPositiveDouble();
         }
 
-        public double InitialFee
+        public double GetInitialFee()
         {
-            get { return _initialFee; }
-            set
+            return _initialFee;
+        }
+
+        public bool EditInitialFee(double value)
+        {
+            if (GetIsActiveAccount())
             {
-                if (IsActiveAccount())
-                {
-                    _initialFee = value;
-                }
+                _initialFee = value;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public double InterestRate
+        public double GetInterestRate()
         {
-            get { return _interestRate; }
-            set
+            return _interestRate;
+        }
+
+        public bool EditInterestRate(double value)
+        {
+            if (GetIsActiveAccount())
             {
-                if (IsActiveAccount())
-                {
-                    _interestRate = value;
-                }
+                _interestRate = value;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public override void Withdrawals(double value)
+        public override bool Withdrawals(double value)
         {
-            if (IsActiveAccount())
+            if (GetIsActiveAccount())
             {
-                if (SumAccount - value >= InitialFee)
+                if (GetSumAccount() - value >= GetInitialFee())
                 {
-                    if (value <= SumAccount)
+                    if (value <= GetSumAccount())
                     {
-                        SumAccount = SumAccount - value;
-                        SuccessfulOperation = true;
+                        EditSumAccount(GetSumAccount() - value);
+                        return true;
                     }
                     else
                     {
-                        AddLogs("Сумма изъятия " + value + " больше остатка на счете " + SumAccount);
+                        AddLogs("Сумма изъятия " + value + " больше остатка на счете " + GetSumAccount());
+                        return false;
                     }
                 }
                 else
                 {
-                    AddLogs("Изъятие средств в размере " + value + " невозможно, т.к. после него сумма на счете будет меньше первоначального взноса " + InitialFee + ". Текущий баланс: " + SumAccount);
+                    AddLogs("Изъятие средств в размере " + value + " невозможно, т.к. после него сумма на счете будет меньше первоначального взноса " + GetInitialFee() + ". Текущий баланс: " + GetSumAccount());
+                    return false;
                 }
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public void InterestCapitalization()
+        public bool InterestCapitalization()
         {
-            if (IsActiveAccount())
+            if (GetIsActiveAccount())
             {
                 if (DateTime.Now.Day == 1)
                 {
 
                     int countDayInYear = DateTime.IsLeapYear(GetYearOfPreviousMonth()) ? 366 : 365;
                     int countDayInMonth = DateTime.DaysInMonth(GetYearOfPreviousMonth(), GetPreviousMonth());
-                    SumAccount = SumAccount + SumAccount * InitialFee * countDayInMonth / (countDayInYear * 100);
+                    EditSumAccount(GetSumAccount() + GetSumAccount() * GetInitialFee() * countDayInMonth / (countDayInYear * 100));
+                    return true;
                 }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 

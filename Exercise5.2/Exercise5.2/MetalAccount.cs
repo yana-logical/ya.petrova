@@ -12,81 +12,109 @@ namespace Exercise5._2
         string _metalType;
         double _amountGrams;
         double _costGram;
-        public MetalAccount(Guid number, string owner, double sumAccount, string status,
-                                   string metalType, double amountGrams, double costGram) : base(number, owner, sumAccount, status)
+        public MetalAccount(Guid number, string owner, double sumAccount, bool isActiveAccount,
+                                   string metalType, double amountGrams, double costGram) : base(number, owner, sumAccount, isActiveAccount)
         {
-            MetalType = metalType;
-            AmountGrams = amountGrams;
-            CostGram = costGram;
+            _metalType = metalType;
+            _amountGrams = amountGrams;
+            _costGram = costGram;
         }
 
         public MetalAccount()
         {
-            MetalType = Console.ReadLine();
-            AmountGrams = GetPositiveDouble();
-            CostGram = GetPositiveDouble();
+            _metalType = Console.ReadLine();
+            _amountGrams = GetPositiveDouble();
+            _costGram = GetPositiveDouble();
         }
 
-        public string MetalType
+        public string GetMetalType()
         {
-            get { return _metalType; }
-            set
+            return _metalType;
+        }
+
+        public bool EditMetalType (string value)
+        {
+            if (GetIsActiveAccount())
             {
-                if (IsActiveAccount())
-                {
-                    _metalType = value;
-                }
+                _metalType = value;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public double AmountGrams
+        public double GetAmountGrams()
         {
-            get { return _amountGrams; }
-            set
+            return _amountGrams;
+        }
+
+        public bool EditAmountGrams(double value)
+        {
+            if (GetIsActiveAccount())
             {
-                if (IsActiveAccount())
-                {
-                    _amountGrams = value;
-                }
+                _amountGrams = value;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public double CostGram
+        public double GetCostGram()
         {
-            get { return _costGram; }
-            set
+            return _costGram;
+        }
+
+        public bool EditCostGram(double value)
+        {
+            if (GetIsActiveAccount())
             {
-                if (IsActiveAccount())
-                {
-                    _costGram = value;
-                }
+                _costGram = value;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public override void Refill(double value)
+        public override bool Refill(double value)
         {
-            if (IsActiveAccount())
+            if (GetIsActiveAccount())
             {
-                SumAccount = SumAccount + value;
-                AmountGrams = AmountGrams + value / CostGram;
+                EditSumAccount(GetSumAccount() + value);
+                _amountGrams = _amountGrams + value / _costGram;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
 
-        public override void Withdrawals(double value)
+        public override bool Withdrawals(double value)
         {
-            if (IsActiveAccount())
+            if (GetIsActiveAccount())
             {
-                if (value <= SumAccount)
+                if (value <= GetSumAccount())
                 {
-                    SumAccount = SumAccount - value;
-                    AmountGrams = AmountGrams - value / CostGram;
-                    SuccessfulOperation = true;
+                    EditSumAccount(GetSumAccount() - value);
+                    _amountGrams = _amountGrams - value / _costGram;
+                    return true;
                 }
                 else
                 {
-                    AddLogs("Сумма изъятия " + value + " больше остатка на счете " + SumAccount);
+                    AddLogs("Сумма изъятия " + value + " больше остатка на счете " + GetSumAccount());
+                    return false;
                 }
+            }
+            else
+            {
+                return false;
             }
     }
     }

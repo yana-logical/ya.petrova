@@ -11,45 +11,60 @@ namespace Exercise5._2
     {
         double _accountMaintenance;
 
-        public CheckingAccount(Guid number, string owner, double sumAccount, string status,
-                                double accountMaintenance) : base(number, owner, sumAccount, status)
+        public CheckingAccount(Guid number, string owner, double sumAccount, bool isActiveAccount,
+                                double accountMaintenance) : base(number, owner, sumAccount, isActiveAccount)
         {
-            AccountMaintenance = accountMaintenance;
+            _accountMaintenance = accountMaintenance;
         }
 
         public CheckingAccount()
         {
-            AccountMaintenance = GetPositiveDouble();
+            _accountMaintenance = GetPositiveDouble();
         }
 
-        public double AccountMaintenance
+        public double GetAccountMaintenance()
         {
-            get { return _accountMaintenance; }
-            set
+            return _accountMaintenance;
+        }
+
+        public bool EditAccountMaintenance(double value)
+        {
+            if (GetIsActiveAccount())
             {
-                if (IsActiveAccount())
-                {
-                    _accountMaintenance = value;
-                }
+                _accountMaintenance = value;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public void CancellationFeesForAccountMaintenance()
+        public bool CancellationFeesForAccountMaintenance()
         {
-            if (IsActiveAccount())
+            if (GetIsActiveAccount())
             {
-                if (SumAccount > AccountMaintenance)
+                if (GetSumAccount() > GetAccountMaintenance())
                 {
                     if (DateTime.Now.Day == 1)
                     {
-                        SumAccount = SumAccount - AccountMaintenance;
-                        SuccessfulOperation = true;
+                        EditSumAccount(GetSumAccount()-GetAccountMaintenance());
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
                 else
                 {
-                    AddLogs("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + SumAccount + ", размер платы: " + AccountMaintenance);
+                    AddLogs("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + GetSumAccount() + ", размер платы: " + GetAccountMaintenance());
+                    return false;
                 }
+            }
+            else
+            {
+                return false;
             }
         }
     }
