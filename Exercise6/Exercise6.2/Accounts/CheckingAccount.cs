@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exercise5._2
+namespace Exercise6._2
 {
-    //рассчетный
-    public class CheckingAccount: SavingsAccount
+    //расчетный
+    public class CheckingAccount: BaseAccount
     {
-        public CheckingAccount(Guid number, string owner, double sumAccount, bool isActiveAccount,
-                                double accountMaintenance) : base(number, owner, sumAccount, isActiveAccount)
+        public CheckingAccount(Guid number, double sumAccount, bool isActiveAccount,
+                                double accountMaintenance) : base(number, sumAccount, isActiveAccount)
         {
             AccountMaintenance = accountMaintenance;
         }
@@ -31,7 +31,7 @@ namespace Exercise5._2
             }
             else
             {
-                AddLogs("Счет закрыт. Операция невозможна.");
+                Bank.AddLogs("|" + GetType().Name + "| " + "Счет закрыт. Операция невозможна.");
                 return false;
             }
         }
@@ -54,13 +54,13 @@ namespace Exercise5._2
                 }
                 else
                 {
-                    AddLogs("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + SumAccount + ", размер платы: " + AccountMaintenance);
+                    Bank.AddLogs("|" + GetType().Name + "| " + "На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + SumAccount + ", размер платы: " + AccountMaintenance);
                     return false;
                 }
             }
             else
             {
-                AddLogs("Счет закрыт. Операция невозможна.");
+                Bank.AddLogs("|" + GetType().Name + "| " + "Счет закрыт. Операция невозможна.");
                 return false;
             }
         }
