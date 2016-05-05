@@ -9,45 +9,35 @@ namespace Exercise5._2
     //сберегательный
     public class SavingsAccount
     {
-        readonly Guid _number;
-        string _owner;
-        double _sumAccount;
-        bool _isActiveAccount;
         private List<string> _logs = new List<string>();
 
         public SavingsAccount(Guid number, string owner, double sumAccount, bool isActiveAccount)
         {
-            _number = number;
-            _owner = owner;
-            _sumAccount = sumAccount;
-            _isActiveAccount = isActiveAccount;
+            Number = number;
+            Owner = owner;
+            SumAccount = sumAccount;
+            IsActiveAccount = isActiveAccount;
             
         }
 
         public SavingsAccount()
         {
-            _number = Guid.NewGuid();
-            _owner = Console.ReadLine();
-            _sumAccount = GetPositiveDouble();
-            _isActiveAccount = true;
+            Number = Guid.NewGuid();
+            Owner = Console.ReadLine();
+            SumAccount = GetPositiveDouble();
+            IsActiveAccount = true;
 
         }
 
-        private Guid GetNumber ()
-        {
-           return _number;
-        }
+        public Guid Number { get; private set; }
 
-        public string GetOwner()
-        {
-            return _owner;
-        }
+        public string Owner { get; private set; }
 
         public bool EditOwner(string value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                _owner = value;
+                Owner = value;
                 return true;
             }
             else
@@ -57,16 +47,13 @@ namespace Exercise5._2
             }
         }
 
-        public double GetSumAccount()
-        {
-            return _sumAccount;
-        }
+        protected double SumAccount { get; set; }
 
         public bool EditSumAccount(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                _sumAccount = value;
+                SumAccount = value;
                 return true;
             }
             else
@@ -76,10 +63,7 @@ namespace Exercise5._2
             }
         }
 
-        public bool GetIsActiveAccount()
-        {
-            return _isActiveAccount;
-        }
+        public bool IsActiveAccount { get; private set; }
 
         protected void AddLogs(string value)
         {
@@ -93,9 +77,9 @@ namespace Exercise5._2
 
         public virtual bool Refill(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                EditSumAccount(GetSumAccount() + value);
+                EditSumAccount(SumAccount + value);
                 return true;
             }
             else
@@ -106,16 +90,16 @@ namespace Exercise5._2
 
         public virtual bool Withdrawals(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                if (value <= GetSumAccount())
+                if (value <= SumAccount)
                 {
-                    EditSumAccount(GetSumAccount() - value);
+                    EditSumAccount(SumAccount - value);
                     return true;
                 }
                 else
                 {
-                    AddLogs("Сумма изъятия "+ value + " больше остатка на счете " + GetSumAccount());
+                    AddLogs("Сумма изъятия "+ value + " больше остатка на счете " + SumAccount);
                     return false;
                 }
             }
@@ -126,16 +110,16 @@ namespace Exercise5._2
             }
         }
 
-        public bool CloseAccount()
+        public bool Close()
         {
-            if (GetSumAccount() == 0)
+            if (Math.Abs(SumAccount) < double.Epsilon)
             {
-                _isActiveAccount = false;
+                IsActiveAccount = false;
                 return true;
             }
             else
             {
-                AddLogs("Невозможно закрыть счет, т.к. его баланс положительный. Остаток на счете: " + GetSumAccount());
+                AddLogs("Невозможно закрыть счет, т.к. его баланс положительный. Остаток на счете: " + SumAccount);
                 return false;
             }
         }

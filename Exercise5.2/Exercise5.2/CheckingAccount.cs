@@ -9,29 +9,24 @@ namespace Exercise5._2
     //рассчетный
     public class CheckingAccount: SavingsAccount
     {
-        double _accountMaintenance;
-
         public CheckingAccount(Guid number, string owner, double sumAccount, bool isActiveAccount,
                                 double accountMaintenance) : base(number, owner, sumAccount, isActiveAccount)
         {
-            _accountMaintenance = accountMaintenance;
+            AccountMaintenance = accountMaintenance;
         }
 
         public CheckingAccount()
         {
-            _accountMaintenance = GetPositiveDouble();
+            AccountMaintenance = GetPositiveDouble();
         }
 
-        public double GetAccountMaintenance()
-        {
-            return _accountMaintenance;
-        }
+        public double AccountMaintenance { get; private set; }
 
         public bool EditAccountMaintenance(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                _accountMaintenance = value;
+                AccountMaintenance = value;
                 return true;
             }
             else
@@ -43,13 +38,13 @@ namespace Exercise5._2
 
         public bool CancellationFeesForAccountMaintenance()
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                if (GetSumAccount() > GetAccountMaintenance())
+                if (SumAccount > AccountMaintenance)
                 {
                     if (DateTime.Now.Day == 1)
                     {
-                        EditSumAccount(GetSumAccount()-GetAccountMaintenance());
+                        EditSumAccount(SumAccount-AccountMaintenance);
                         return true;
                     }
                     else
@@ -59,7 +54,7 @@ namespace Exercise5._2
                 }
                 else
                 {
-                    AddLogs("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + GetSumAccount() + ", размер платы: " + GetAccountMaintenance());
+                    AddLogs("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + SumAccount + ", размер платы: " + AccountMaintenance);
                     return false;
                 }
             }

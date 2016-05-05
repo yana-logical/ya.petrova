@@ -9,34 +9,28 @@ namespace Exercise5._2
     //обезличенный металлический счет
     public class MetalAccount: SavingsAccount
     {
-        string _metalType;
-        double _amountGrams;
-        double _costGram;
         public MetalAccount(Guid number, string owner, double sumAccount, bool isActiveAccount,
                                    string metalType, double amountGrams, double costGram) : base(number, owner, sumAccount, isActiveAccount)
         {
-            _metalType = metalType;
-            _amountGrams = amountGrams;
-            _costGram = costGram;
+            MetalType = metalType;
+            AmountGrams = amountGrams;
+            CostGram = costGram;
         }
 
         public MetalAccount()
         {
-            _metalType = Console.ReadLine();
-            _amountGrams = GetPositiveDouble();
-            _costGram = GetPositiveDouble();
+            MetalType = Console.ReadLine();
+            AmountGrams = GetPositiveDouble();
+            CostGram = GetPositiveDouble();
         }
 
-        public string GetMetalType()
-        {
-            return _metalType;
-        }
+        public string MetalType { get; private set; }
 
         public bool EditMetalType (string value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                _metalType = value;
+                MetalType = value;
                 return true;
             }
             else
@@ -46,16 +40,13 @@ namespace Exercise5._2
             }
         }
 
-        public double GetAmountGrams()
-        {
-            return _amountGrams;
-        }
+        public double AmountGrams { get; private set; }
 
         public bool EditAmountGrams(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                _amountGrams = value;
+                AmountGrams = value;
                 return true;
             }
             else
@@ -65,16 +56,13 @@ namespace Exercise5._2
             }
         }
 
-        public double GetCostGram()
-        {
-            return _costGram;
-        }
+        public double CostGram { get; private set; }
 
         public bool EditCostGram(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                _costGram = value;
+                CostGram = value;
                 return true;
             }
             else
@@ -86,10 +74,10 @@ namespace Exercise5._2
 
         public override bool Refill(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                EditSumAccount(GetSumAccount() + value);
-                _amountGrams = _amountGrams + value / _costGram;
+                EditSumAccount(SumAccount + value);
+                AmountGrams = AmountGrams + value / CostGram;
                 return true;
             }
             else
@@ -102,17 +90,17 @@ namespace Exercise5._2
 
         public override bool Withdrawals(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                if (value <= GetSumAccount())
+                if (value <= SumAccount)
                 {
-                    EditSumAccount(GetSumAccount() - value);
-                    _amountGrams = _amountGrams - value / _costGram;
+                    EditSumAccount(SumAccount - value);
+                    AmountGrams = AmountGrams - value / CostGram;
                     return true;
                 }
                 else
                 {
-                    AddLogs("Сумма изъятия " + value + " больше остатка на счете " + GetSumAccount());
+                    AddLogs("Сумма изъятия " + value + " больше остатка на счете " + SumAccount);
                     return false;
                 }
             }

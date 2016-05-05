@@ -9,32 +9,26 @@ namespace Exercise5._2
     //накопительный
     public class AccumulationAccount: SavingsAccount
     {
-        double _initialFee;
-        double _interestRate;
-
         public AccumulationAccount(Guid number, string owner, double sumAccount, bool isActiveAccount,
                                     double initialFee, double interestRate) : base(number, owner, sumAccount, isActiveAccount)
         {
-            _initialFee = initialFee;
-            _interestRate = interestRate;
+            InitialFee = initialFee;
+            InterestRate = interestRate;
         }
 
         public AccumulationAccount()
         {
-            _initialFee = GetPositiveDouble();
-            _interestRate = GetPositiveDouble();
+            InitialFee = GetPositiveDouble();
+            InterestRate = GetPositiveDouble();
         }
 
-        public double GetInitialFee()
-        {
-            return _initialFee;
-        }
+        public double InitialFee { get; private set; }
 
         public bool EditInitialFee(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                _initialFee = value;
+                InitialFee = value;
                 return true;
             }
             else
@@ -44,16 +38,13 @@ namespace Exercise5._2
             }
         }
 
-        public double GetInterestRate()
-        {
-            return _interestRate;
-        }
+        public double InterestRate { get; private set; }
 
         public bool EditInterestRate(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                _interestRate = value;
+                InterestRate = value;
                 return true;
             }
             else
@@ -65,24 +56,24 @@ namespace Exercise5._2
 
         public override bool Withdrawals(double value)
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
-                if (GetSumAccount() - value >= GetInitialFee())
+                if (SumAccount- value >= InitialFee)
                 {
-                    if (value <= GetSumAccount())
+                    if (value <= SumAccount)
                     {
-                        EditSumAccount(GetSumAccount() - value);
+                        EditSumAccount(SumAccount - value);
                         return true;
                     }
                     else
                     {
-                        AddLogs("Сумма изъятия " + value + " больше остатка на счете " + GetSumAccount());
+                        AddLogs("Сумма изъятия " + value + " больше остатка на счете " + SumAccount);
                         return false;
                     }
                 }
                 else
                 {
-                    AddLogs("Изъятие средств в размере " + value + " невозможно, т.к. после него сумма на счете будет меньше первоначального взноса " + GetInitialFee() + ". Текущий баланс: " + GetSumAccount());
+                    AddLogs("Изъятие средств в размере " + value + " невозможно, т.к. после него сумма на счете будет меньше первоначального взноса " + InitialFee + ". Текущий баланс: " + SumAccount);
                     return false;
                 }
             }
@@ -95,14 +86,14 @@ namespace Exercise5._2
 
         public bool InterestCapitalization()
         {
-            if (GetIsActiveAccount())
+            if (IsActiveAccount)
             {
                 if (DateTime.Now.Day == 1)
                 {
 
                     int countDayInYear = DateTime.IsLeapYear(GetYearOfPreviousMonth()) ? 366 : 365;
                     int countDayInMonth = DateTime.DaysInMonth(GetYearOfPreviousMonth(), GetPreviousMonth());
-                    EditSumAccount(GetSumAccount() + GetSumAccount() * GetInitialFee() * countDayInMonth / (countDayInYear * 100));
+                    EditSumAccount(SumAccount + SumAccount * InitialFee * countDayInMonth / (countDayInYear * 100));
                     return true;
                 }
                 else
