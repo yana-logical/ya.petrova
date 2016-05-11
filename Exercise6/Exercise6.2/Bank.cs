@@ -20,10 +20,10 @@ namespace Exercise6._2
             return _logs;
         }
 
-        public void Transaction(BaseAccount from, BaseAccount to, double sum)
+        public void Transaction(BaseAccount sender, BaseAccount recipient, double sum)
         {
-            from.Withdrawals(sum);
-            to.Refill(sum);
+            sender.Withdrawals(sum);
+            recipient.Refill(sum);
         }
     }
 }
