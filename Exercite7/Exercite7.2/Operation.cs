@@ -10,15 +10,19 @@ namespace Exercite7._2
     {
         public static int GetGCD(int numberOne, int numberTwo)
         {
-            if (numberOne == numberTwo)
+            if (numberTwo != 0)
             {
-                return numberOne;
+                if (numberOne == numberTwo)
+                {
+                    return numberOne;
+                }
+                if (numberOne > numberTwo)
+                {
+                    return GetGCD(numberOne - numberTwo, numberTwo);
+                }
+                return GetGCD(numberTwo - numberOne, numberOne);
             }
-            if (numberOne > numberTwo)
-            {
-                return GetGCD(numberOne - numberTwo, numberTwo);
-            }
-            return GetGCD(numberTwo - numberOne, numberOne);
+            return 0;
         }
     }
 }

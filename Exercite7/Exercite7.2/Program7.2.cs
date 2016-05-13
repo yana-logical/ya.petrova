@@ -29,8 +29,9 @@ namespace Exercite7._2
 
             for (int i = 0; i < count; i++)
             {
-                Fraction value = new Fraction();
-                value = Fraction.Create(random.Next(-10, 10), random.Next(1, 10));
+                //Fraction value = new Fraction();
+                Fraction value = Fraction.CreateConsole();
+                //value = Fraction.Create(random.Next(-10, 10), random.Next(1, 10));
                 array[i] = value;
                 Console.WriteLine(array[i]);
             }

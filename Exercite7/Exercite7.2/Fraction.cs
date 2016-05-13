@@ -10,10 +10,16 @@ namespace Exercite7._2
     {
         private int _denominator;
 
-        private Fraction(int numerator, int denominator)
+        public Fraction(int numerator, int denominator)
         {
             Numerator = numerator;
             _denominator = denominator;
+            int gsd = Operation.GetGCD(Math.Abs(numerator), denominator);
+            if (gsd != 0)
+            {
+                Numerator = Numerator / gsd;
+                _denominator = _denominator / gsd;
+            }
         }
 
         public int Numerator { get; private set; }
@@ -27,13 +33,13 @@ namespace Exercite7._2
         public static Fraction CreateConsole()
         {
             Fraction value = new Fraction(Program.GetInt(), Program.GetInt());
-            return CastFraction(value);
+            return value;
         }
 
         public static Fraction Create(int numerator, int denominator)
         {
             Fraction value = new Fraction(numerator, denominator);
-            return CastFraction(value);
+            return value;
         }
 
         public static Fraction CastFraction(Fraction value)
@@ -58,7 +64,7 @@ namespace Exercite7._2
                 new Fraction(
                     Numerator*fractionTwo.Denominator + fractionTwo.Numerator*Denominator,
                     Denominator*fractionTwo.Denominator);
-            return CastFraction(value);
+            return value;
         }
 
         public Fraction Subtraction(Fraction fractionTwo)
@@ -67,21 +73,21 @@ namespace Exercite7._2
                 new Fraction(
                     Numerator*fractionTwo.Denominator - fractionTwo.Numerator*Denominator,
                     Denominator*fractionTwo.Denominator);
-            return CastFraction(value);
+            return value;
         }
 
         public Fraction Multiplication(Fraction fractionTwo)
         {
             Fraction value = new Fraction(Numerator*fractionTwo.Numerator,
                 Denominator*fractionTwo.Denominator);
-            return CastFraction(value);
+            return value;
         }
 
         public Fraction Division(Fraction fractionTwo)
         {
             Fraction value = new Fraction(Numerator*fractionTwo.Denominator,
                 Denominator*fractionTwo.Numerator);
-            return CastFraction(value);
+            return value;
         }
 
         public int CompareTo(object obj)
