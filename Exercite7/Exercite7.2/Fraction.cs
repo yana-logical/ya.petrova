@@ -8,15 +8,21 @@ namespace Exercite7._2
 {
     public struct Fraction: IComparable
     {
+        private int _denominator;
+
         private Fraction(int numerator, int denominator)
         {
             Numerator = numerator;
-            Denominator = denominator;
+            _denominator = denominator;
         }
 
         public int Numerator { get; private set; }
 
-        public int Denominator { get; private set; }
+        public int Denominator
+        {
+            get { return _denominator; }
+            private set { _denominator = Math.Abs(value); }
+        }
 
         public static Fraction CreateConsole()
         {
@@ -34,9 +40,9 @@ namespace Exercite7._2
         {
             if (value.Numerator > 0)
             {
-                int _GSD = Program.GetGCD(Math.Abs(value.Numerator), value.Denominator);
-                value.Numerator = value.Numerator/_GSD;
-                value.Denominator = value.Denominator/_GSD;
+                int gsd = Program.GetGCD(Math.Abs(value.Numerator), value.Denominator);
+                value.Numerator = value.Numerator/gsd;
+                value.Denominator = value.Denominator/gsd;
                 return value;
             }
             else
@@ -46,35 +52,35 @@ namespace Exercite7._2
             }
         }
 
-        public static Fraction Addition(Fraction fractionOne, Fraction fractionTwo)
+        public Fraction Addition(Fraction fractionTwo)
         {
             Fraction value =
                 new Fraction(
-                    fractionOne.Numerator*fractionTwo.Denominator + fractionTwo.Numerator*fractionOne.Denominator,
-                    fractionOne.Denominator*fractionTwo.Denominator);
+                    Numerator*fractionTwo.Denominator + fractionTwo.Numerator*Denominator,
+                    Denominator*fractionTwo.Denominator);
             return CastFraction(value);
         }
 
-        public static Fraction Subtraction(Fraction fractionOne, Fraction fractionTwo)
+        public Fraction Subtraction(Fraction fractionTwo)
         {
             Fraction value =
                 new Fraction(
-                    fractionOne.Numerator * fractionTwo.Denominator - fractionTwo.Numerator * fractionOne.Denominator,
-                    fractionOne.Denominator * fractionTwo.Denominator);
+                    Numerator*fractionTwo.Denominator - fractionTwo.Numerator*Denominator,
+                    Denominator*fractionTwo.Denominator);
             return CastFraction(value);
         }
 
-        public static Fraction Multiplication(Fraction fractionOne, Fraction fractionTwo)
+        public Fraction Multiplication(Fraction fractionTwo)
         {
-            Fraction value = new Fraction(fractionOne.Numerator*fractionTwo.Numerator,
-                fractionOne.Denominator*fractionTwo.Denominator);
+            Fraction value = new Fraction(Numerator*fractionTwo.Numerator,
+                Denominator*fractionTwo.Denominator);
             return CastFraction(value);
         }
 
-        public static Fraction Division(Fraction fractionOne, Fraction fractionTwo)
+        public Fraction Division(Fraction fractionTwo)
         {
-            Fraction value = new Fraction(fractionOne.Numerator*fractionTwo.Denominator,
-                fractionOne.Denominator*fractionTwo.Numerator);
+            Fraction value = new Fraction(Numerator*fractionTwo.Denominator,
+                Denominator*fractionTwo.Numerator);
             return CastFraction(value);
         }
 

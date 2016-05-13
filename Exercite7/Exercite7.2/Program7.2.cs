@@ -42,7 +42,7 @@ namespace Exercite7._2
 
             for (int i = 0; i < count ; i++)
             {
-                sum = Fraction.Addition(sum, array[i]);
+                sum = sum.Addition(array[i]);
             }
 
             Console.WriteLine("\r\nСумма дробей = " + sum);
