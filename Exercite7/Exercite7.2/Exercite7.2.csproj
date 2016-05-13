@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fraction.cs" />
+    <Compile Include="Operation.cs" />
     <Compile Include="Program7.2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

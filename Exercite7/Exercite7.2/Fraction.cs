@@ -40,7 +40,7 @@ namespace Exercite7._2
         {
             if (value.Numerator > 0)
             {
-                int gsd = Program.GetGCD(Math.Abs(value.Numerator), value.Denominator);
+                int gsd = Operation.GetGCD(Math.Abs(value.Numerator), value.Denominator);
                 value.Numerator = value.Numerator/gsd;
                 value.Denominator = value.Denominator/gsd;
                 return value;

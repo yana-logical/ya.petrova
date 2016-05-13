@@ -70,19 +70,6 @@ namespace Exercite7._2
             return 0;
         }
 
-        public static int GetGCD(int numberOne, int numberTwo)
-        {
-            if (numberOne == numberTwo)
-            {
-                return numberOne;
-            }
-            if (numberOne > numberTwo)
-            {
-                return GetGCD(numberOne - numberTwo, numberTwo);
-            }
-            return GetGCD(numberTwo - numberOne, numberOne);
-        }
-
         public static void PrintArray(Fraction[] array)
         {
             string value = "";
