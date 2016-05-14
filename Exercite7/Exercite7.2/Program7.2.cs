@@ -80,13 +80,5 @@ namespace Exercite7._2
             }
             Console.WriteLine(value);
         }
-
-         
-        //for (int i = 0; i<count; i++)
-        //    {
-        //        array[i] = Fraction.CreateRandom();
-        //        Console.WriteLine(array[i]);
-        //    }
-
-}
+    }
 }
