@@ -29,7 +29,7 @@ namespace Exercite7._2
             get { return _denominator; }
             private set
             {
-                if (_denominator < 0)
+                if (value < 0)
                 {
                     _denominator = Math.Abs(value);
                     Numerator = Numerator*-1;
