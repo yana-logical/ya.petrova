@@ -5,6 +5,8 @@ namespace Exercite8._1
     //базовый
     public abstract class BaseAccount
     {
+        private double _sumAccount;
+
         public BaseAccount(Guid number, double sumAccount, bool isActiveAccount)
         {
             Number = number;
@@ -23,7 +25,24 @@ namespace Exercite8._1
 
         public Guid Number { get; private set; }
 
-        public double SumAccount { get; protected set; }
+        public double SumAccount
+        {
+            get { return _sumAccount; }
+            protected set
+            {
+                if (!IsActiveAccount)
+                {
+                    Bank.AddLogs("|" + GetType().Name + "| " + "Счет закрыт. Операция невозможна.");
+                    throw new InvalidOperationException("Операция невозможна. Счет закрыт.");
+                }
+                if (value < 0)
+                {
+                    Bank.AddLogs("|" + GetType().Name + "| " + "Сумма на счету не может быть меньше нуля.");
+                    throw new InvalidOperationException("Сумма на счету не может быть меньше нуля.");
+                }
+                _sumAccount = value;
+            }
+        }
 
         public void EditSumAccount(double value)
         {

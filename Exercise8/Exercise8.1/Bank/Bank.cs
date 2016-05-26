@@ -22,16 +22,9 @@ namespace Exercite8._1
             try
             {
                 sender.Withdrawals(sum);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            try
-            {
                 recipient.Refill(sum);
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

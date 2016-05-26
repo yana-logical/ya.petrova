@@ -54,7 +54,7 @@ namespace Exercite8._1
             }
             if (value >= SumAccount)
             {
-                throw new ArgumentOutOfRangeException("Сумма списания меньше оставшейся суммы на счете: " + value);
+                throw new ArgumentOutOfRangeException("Сумма списания больше оставшейся суммы на счете: " + value);
             }
             if (SumAccount - value >= InitialFee)
             {

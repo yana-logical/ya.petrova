@@ -6,6 +6,8 @@ namespace Exercite8._1
     public abstract class BaseClient: IComparable
     {
         private List<BaseAccount> _allAccounts;
+        private string _name;
+        private int _maxCountAccount;
 
         protected BaseClient(Guid number, string name, int maxCountAccount)
         {
@@ -26,9 +28,33 @@ namespace Exercite8._1
 
         public Guid Number { get; private set; }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    Bank.AddLogs("|" + GetType().Name + "| " + "Имя не может быть пустым.");
+                    throw new ArgumentOutOfRangeException("Имя не может быть пустым.");
+                }
+                _name = value;
+            }
+        }
 
-        public int MaxCountAccount { get; private set; }
+        public int MaxCountAccount
+        {
+            get { return _maxCountAccount; }
+            private set
+            {
+                if (_maxCountAccount < 0)
+                {
+                    Bank.AddLogs("|" + GetType().Name + "| " + "Количество счетов не может быть отрицательным.");
+                    throw new ArgumentOutOfRangeException("Количество счетов не может быть отрицательным.");
+                }
+                _maxCountAccount = value;
+            }
+        }
 
         public void AddAccount(BaseAccount value)
         {
@@ -96,20 +122,28 @@ namespace Exercite8._1
 
         public void CloseAccount(Guid value)
         {
+            bool success = false;
+
+            if (_allAccounts.Count == 0)
+            {
+                Bank.AddLogs("|" + GetType().Name + "| " + "У клиента нет ни одного открытого счета.");
+                throw new InvalidOperationException("У клиента нет ни одного открытого счета.");
+            }
+
             foreach (BaseAccount t in _allAccounts)
             {
                 if (value == t.Number)
                 {
                     t.Close();
-                }
-                else
-                {
-                    Bank.AddLogs("|" + GetType().Name + "| " + "Счет с таким номером не найден.");
-                    throw new InvalidOperationException("Счет с таким номером не найден.");
+                    success = true;
                 }
             }
-            Bank.AddLogs("|" + GetType().Name + "| " + "У клиента нет ни одного открытого счета.");
-            throw new InvalidOperationException("У клиента нет ни одного открытого счета.");
+
+            if (success == false)
+            {
+                Bank.AddLogs("|" + GetType().Name + "| " + "Счет с таким номером не найден.");
+                throw new InvalidOperationException("Счет с таким номером не найден.");
+            }
         }
 
         public int CompareTo(object obj)
