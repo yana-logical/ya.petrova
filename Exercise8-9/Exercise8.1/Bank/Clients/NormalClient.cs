@@ -2,7 +2,7 @@
 
 namespace Exercite8._1
 {
-    class NormalClient: BaseClient
+    public class NormalClient: BaseClient
     {
         private const int _maxCountAccount = 3;
 

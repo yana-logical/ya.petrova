@@ -5,30 +5,33 @@ namespace Exercite8._1
     //расчетный
     public class CheckingAccount: BaseAccount
     {
-        public CheckingAccount(Guid number, double sumAccount, bool isActiveAccount,
-                                double accountMaintenance) : base(number, sumAccount, isActiveAccount)
+        private double _accountMaintenance;
+
+        public CheckingAccount(Guid number, double sumAccount, double accountMaintenance) : base(number, sumAccount)
         {
-            AccountMaintenance = accountMaintenance;
+            _accountMaintenance = accountMaintenance;
         }
 
         public CheckingAccount()
         {
-            AccountMaintenance = Operation.GetPositiveDouble();
+            _accountMaintenance = Operation.GetPositiveDouble();
         }
 
-        public double AccountMaintenance { get; private set; }
-
-        public void EditAccountMaintenance(double value)
+        public double AccountMaintenance
         {
-            if (!IsActiveAccount)
+            get { return _accountMaintenance; }
+            private set
             {
-                Bank.AddLogs("|" + GetType().Name + "| " + "Счет закрыт. Операция невозможна.");
-                throw new InvalidOperationException("Операция невозможна. Счет закрыт.");
+                if (!IsActiveAccount)
+                {
+                    Bank.AddLogs("|" + GetType().Name + "| " + "Счет закрыт. Операция невозможна.");
+                    throw new InvalidOperationException("Операция невозможна. Счет закрыт.");
+                }
+                _accountMaintenance = value;
             }
-            AccountMaintenance = value;
         }
 
-        public void CancellationFeesForAccountMaintenance()
+        public void WriteOffForAccountMaintenance()
         {
             if (!IsActiveAccount)
             {
@@ -40,10 +43,15 @@ namespace Exercite8._1
                 Bank.AddLogs("|" + GetType().Name + "| " + "На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + SumAccount + ", размер платы: " + AccountMaintenance);
                 throw new ArgumentOutOfRangeException("На счете недостаточно средств для списания платы за обслуживание. Текущий баланс: " + SumAccount + ", размер платы: " + AccountMaintenance);
             }
-            if (DateTime.Now.Day == 1)
+            if (NowDate.Day == 1)
             {
-                EditSumAccount(SumAccount-AccountMaintenance);
+                SumAccount = SumAccount - AccountMaintenance;
             }
+        }
+
+        protected virtual DateTime NowDate
+        {
+            get { return DateTime.Now; }
         }
     }
 }

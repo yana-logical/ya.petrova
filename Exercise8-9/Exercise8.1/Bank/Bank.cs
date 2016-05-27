@@ -27,6 +27,7 @@ namespace Exercite8._1
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Exercite8._1
 {
-    class VIPClient: BaseClient
+    public class VIPClient: BaseClient
     {
         private const int _maxCountAccount = 10;
 

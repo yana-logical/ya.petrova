@@ -15,11 +15,11 @@ namespace Exercite8._1
         {
             Numerator = numerator;
             _denominator = denominator;
-            int gcd = Operation.GetGCD(Math.Abs(numerator), denominator);
+            int gcd = Operation.GetGCD(numerator, denominator);
             if (gcd != 0)
             {
                 Numerator = Numerator / gcd;
-                _denominator = _denominator / gcd;
+                Denominator = Denominator / gcd;
             }
         }
 
@@ -30,16 +30,19 @@ namespace Exercite8._1
             get { return _denominator; }
             private set
             {
-                if (value !=0)
+                if (value == 0)
                 {
-                    if (value < 0)
-                    {
-                        _denominator = Math.Abs(value);
-                        Numerator = Numerator * -1;
-                    }
+                    throw new ArgumentOutOfRangeException("Знаменатель дроби не может быть равен нулю");
+                }
+                if (value < 0)
+                {
+                    _denominator = Math.Abs(value);
+                    Numerator = Numerator*-1;
+                }
+                else
+                {
                     _denominator = value;
                 }
-                throw new ArgumentOutOfRangeException("Знаменатель дроби не может быть равен нулю");
             }
         }
 
@@ -77,6 +80,10 @@ namespace Exercite8._1
 
         public Fraction Division(Fraction fractionTwo)
         {
+            if (fractionTwo.Numerator == 0)
+            {
+                throw new ArgumentNullException("Нельзя делить на ноль");
+            }
             Fraction value = new Fraction(Numerator*fractionTwo.Denominator,
                 Denominator*fractionTwo.Numerator);
             return value;

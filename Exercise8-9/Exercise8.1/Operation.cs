@@ -10,19 +10,11 @@ namespace Exercite8._1
     {
         public static int GetGCD(int numberOne, int numberTwo)
         {
-            if (numberTwo != 0)
-            {
-                if (numberOne == numberTwo)
-                {
-                    return numberOne;
-                }
-                if (numberOne > numberTwo)
-                {
-                    return GetGCD(numberOne - numberTwo, numberTwo);
-                }
-                return GetGCD(numberTwo - numberOne, numberOne);
-            }
-            throw new ArgumentOutOfRangeException("Нельзя вычислить наибольший общий делитель, если одно из чисел - 0");
+            numberOne = Math.Abs(numberOne);
+            numberTwo = Math.Abs(numberTwo);
+            if (numberTwo == 0) return numberOne;
+            if (numberOne == 0) return numberTwo;
+            return GetGCD(numberTwo % numberOne, numberOne);
         }
 
         public static int GetInt()
@@ -65,16 +57,16 @@ namespace Exercite8._1
             Console.WriteLine(value);
         }
 
-        public static int GetPreviousMonth()
-        //Возращает номер предыдущего месяца
+        public static int GetPreviousMonth(DateTime date)
+        //Возращает номер предыдущего от пришедшего месяца
         {
-            return (DateTime.Now.Month - 1 == 0) ? 12 : (DateTime.Now.Month - 1);
+            return (date.Month - 1 == 0) ? 12 : (date.Month - 1);
         }
 
-        public static int GetYearOfPreviousMonth()
-        //Возращает номер года предыдущего месяца
+        public static int GetYearOfPreviousMonth(DateTime date)
+        //Возращает номер года предыдущего от пришедшего месяца
         {
-            return (GetPreviousMonth() == 12) ? (DateTime.Now.Year - 1) : DateTime.Now.Year;
+            return (GetPreviousMonth(date) == 12) ? (date.Year - 1) : date.Year;
         }
     }
 }

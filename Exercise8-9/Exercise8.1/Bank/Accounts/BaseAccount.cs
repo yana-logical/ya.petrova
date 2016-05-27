@@ -7,20 +7,18 @@ namespace Exercite8._1
     {
         private double _sumAccount;
 
-        public BaseAccount(Guid number, double sumAccount, bool isActiveAccount)
+        public BaseAccount(Guid number, double sumAccount)
         {
+            IsActiveAccount = true;
             Number = number;
             SumAccount = sumAccount;
-            IsActiveAccount = isActiveAccount;
-
         }
 
         public BaseAccount()
         {
+            IsActiveAccount = true;
             Number = Guid.NewGuid();
             SumAccount = Operation.GetPositiveDouble();
-            IsActiveAccount = true;
-
         }
 
         public Guid Number { get; private set; }
@@ -44,17 +42,7 @@ namespace Exercite8._1
             }
         }
 
-        public void EditSumAccount(double value)
-        {
-            if (!IsActiveAccount)
-            {
-                Bank.AddLogs("|" + GetType().Name + "| " + "Счет закрыт. Операция невозможна.");
-                throw new InvalidOperationException("Операция невозможна. Счет закрыт.");
-            }
-            SumAccount = value;
-        }
-
-        public bool IsActiveAccount { get; private set; }
+        public bool IsActiveAccount { get; protected set; }
 
         public virtual void Refill(double value)
         {
@@ -66,7 +54,7 @@ namespace Exercite8._1
             {
                 throw new ArgumentOutOfRangeException("Сумма пополнения меньше или равна 0" + value);
             }
-            EditSumAccount(SumAccount + value);
+            SumAccount = SumAccount + value;
         }
 
         public virtual void Withdrawals(double value)
@@ -79,11 +67,11 @@ namespace Exercite8._1
             {
                 throw new InvalidOperationException("Операция невозможна. Счет закрыт.");
             }
-            if (value >= SumAccount)
+            if (value > SumAccount)
             {
                 throw new ArgumentOutOfRangeException("Сумма списания меньше оставшейся суммы на счете: " + value);
             }
-            EditSumAccount(SumAccount - value);
+            SumAccount = SumAccount - value;
         }
 
         public void Close()
