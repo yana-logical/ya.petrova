@@ -136,6 +136,7 @@ namespace Exercite8._1
                 {
                     t.Close();
                     success = true;
+                    break;
                 }
             }
 
