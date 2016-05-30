@@ -38,20 +38,20 @@ namespace Tests.Bank.Client
         для перехода к контексту до полного завершения работы приложения с объектами 
         RuntimeCallableWrapper, представляющими находящиеся в них COM-компоненты.*/
 
-        //[TestMethod]
-        //[ExpectedException(typeof(InvalidOperationException))]
-        //public void AddMoreMaxCountAccountAccountClient()
-        //{
-        //    BaseClient client = new NormalClient(Guid.NewGuid(), "Владелец");
-        //    BaseAccount account1 = new SavingsAccount(Guid.NewGuid(), 1000);
-        //    BaseAccount account2 = new SavingsAccount(Guid.NewGuid(), 2000);
-        //    BaseAccount account3 = new SavingsAccount(Guid.NewGuid(), 3000);
-        //    BaseAccount account4 = new SavingsAccount(Guid.NewGuid(), 4000);
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void AddMoreMaxCountAccountAccountClient()
+        {
+            BaseClient client = new NormalClient(Guid.NewGuid(), "Владелец");
+            BaseAccount account1 = new SavingsAccount(Guid.NewGuid(), 1000);
+            BaseAccount account2 = new SavingsAccount(Guid.NewGuid(), 2000);
+            BaseAccount account3 = new SavingsAccount(Guid.NewGuid(), 3000);
+            BaseAccount account4 = new SavingsAccount(Guid.NewGuid(), 4000);
 
-        //    client.AddAccount(account1);
-        //    client.AddAccount(account2);
-        //    client.AddAccount(account3);
-        //    client.AddAccount(account4);
-        //}
+            client.AddAccount(account1);
+            client.AddAccount(account2);
+            client.AddAccount(account3);
+            client.AddAccount(account4);
+        }
     }
 }

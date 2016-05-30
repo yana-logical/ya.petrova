@@ -16,7 +16,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void GcdNullNumber()
+        public void GcdZeroNumber()
         {
             int result = Operation.GetGCD(0, 15);
 

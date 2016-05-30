@@ -17,7 +17,7 @@ namespace Tests.Bank.Account
         }
 
         [TestMethod]
-        public void CloseAccountNulleSum()
+        public void CloseAccountZeroSum()
         {
             SavingsAccount account = new SavingsAccount(Guid.NewGuid(), 0);
 

@@ -24,10 +24,15 @@ namespace Exercite8._1
                 sender.Withdrawals(sum);
                 recipient.Refill(sum);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 Console.WriteLine(ex.Message);
-                throw new Exception(ex.Message);
+                throw new InvalidOperationException(ex.Message);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw new ArgumentOutOfRangeException(ex.Message);
             }
         }
     }

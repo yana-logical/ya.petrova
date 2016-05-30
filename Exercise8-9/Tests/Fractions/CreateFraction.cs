@@ -45,7 +45,7 @@ namespace Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void CreateFractionWithNullDenominator()
+        public void CreateFractionWithZeroDenominator()
         {
             Fraction fraction = new Fraction(2, 0);
         }

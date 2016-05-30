@@ -43,7 +43,7 @@ namespace Tests.Fractions
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void DivisionNullFraction()
+        public void DivisionZeroFraction()
         {
             Fraction fraction = new Fraction(100000000, 1);
             Fraction fractionTwo = new Fraction(0, 2);

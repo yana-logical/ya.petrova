@@ -20,7 +20,7 @@ namespace Tests.Bank
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void TransactionCloseAccount()
         {
             BaseAccount sender = new SavingsAccount(new Guid(), 0);
@@ -32,7 +32,7 @@ namespace Tests.Bank
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TransactionNegativeSum()
         {
             BaseAccount sender = new SavingsAccount(new Guid(), 1000);
