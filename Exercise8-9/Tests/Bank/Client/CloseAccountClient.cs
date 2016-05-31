@@ -18,5 +18,16 @@ namespace Tests.Bank.Client
 
             Assert.AreEqual(false, account.IsActiveAccount);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void GetNonexistentAccountClient()
+        {
+            BaseClient client = new NormalClient(Guid.NewGuid(), "Владелец");
+            BaseAccount account = new SavingsAccount(Guid.NewGuid(), 0);
+
+            client.AddAccount(account);
+            client.CloseAccount(new Guid());
+        }
     }
 }

@@ -24,6 +24,14 @@ namespace Tests
         }
 
         [TestMethod]
+        public void GcdPrimesNumber()
+        {
+            int result = Operation.GetGCD(17, 3);
+
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
         public void GcdPositiveNumber()
         {
             int result = Operation.GetGCD(5, 15);

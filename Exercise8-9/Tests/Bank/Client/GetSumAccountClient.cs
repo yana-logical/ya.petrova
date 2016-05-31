@@ -23,5 +23,26 @@ namespace Tests.Bank.Client
             Assert.AreEqual(1000, client.GetSumAccount(account1.Number));
             Assert.AreEqual(3000, client.GetSumAccount(account3.Number));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void GetSumNullAccountClient()
+        {
+            BaseClient client = new NormalClient(Guid.NewGuid(), "Владелец");
+
+            Assert.AreEqual(1000, client.GetSumAccount(new Guid()));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void GetSumNonexistentAccountClient()
+        {
+            BaseClient client = new NormalClient(Guid.NewGuid(), "Владелец");
+            BaseAccount account1 = new SavingsAccount(Guid.NewGuid(), 1000);
+
+            client.AddAccount(account1);
+
+            Assert.AreEqual(1000, client.GetSumAccount(new Guid()));
+        }
     }
 }

@@ -39,6 +39,15 @@ namespace Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ZeroSumRefillBigSumAccount()
+        {
+            BaseAccount account = new SavingsAccount(Guid.NewGuid(), 10000000000000);
+
+            account.Refill(0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void RefillNegativeSum()
         {
             BaseAccount account = new SavingsAccount(Guid.NewGuid(), 1000);

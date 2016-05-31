@@ -110,12 +110,26 @@ namespace Exercite8._1
 
         public double GetSumAccount(Guid value)
         {
+            bool success = false;
+
+            if (_allAccounts.Count == 0)
+            {
+                Bank.AddLogs("|" + GetType().Name + "| " + "У клиента нет ни одного открытого счета.");
+                throw new InvalidOperationException("У клиента нет ни одного открытого счета.");
+            }
+
             foreach (BaseAccount t in _allAccounts)
             {
                 if (value == t.Number)
                 {
+                    success = true;
                     return t.SumAccount;
                 }
+            }
+            if (success == false)
+            {
+                Bank.AddLogs("|" + GetType().Name + "| " + "Счет с таким номером не найден.");
+                throw new InvalidOperationException("Счет с таким номером не найден.");
             }
             return 0;
         }
@@ -154,7 +168,7 @@ namespace Exercite8._1
             {
                 return 1;
             }
-            if (client.GetSumAllAccount > GetSumAllAccount)
+            if (client.GetSumAllAccount < GetSumAllAccount)
             {
                 return -1;
             }
