@@ -58,7 +58,7 @@ namespace Exercite8._1
 
         public void AddAccount(BaseAccount value)
         {
-            if (_allAccounts.Count > MaxCountAccount)
+            if (_allAccounts.Count >= MaxCountAccount)
             {
                 Bank.AddLogs("|" + GetType().Name + "| " + "Невозможно добавить счет. У этого типа клиента количество счетов уже равно максимальному: " + MaxCountAccount);
                 throw new InvalidOperationException("Невозможно добавить счет. У этого типа клиента количество счетов уже равно максимальному: " + MaxCountAccount);
