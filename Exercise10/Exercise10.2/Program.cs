@@ -51,7 +51,7 @@ namespace Exercise10._2
                             {
                                 promotionalContact.WriteLine(value + "[" + description + "]");
                             }
-                            if (!isPromotional)
+                            else
                             {
                                 noPromotionalContact.WriteLine(value + "[" + description + "]");
                             }
