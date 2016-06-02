@@ -47,11 +47,11 @@ namespace Exercise10._2
 
                             value = contactNode.Attributes.GetNamedItem("Value").Value;
 
-                            if (isPromotional == true)
+                            if (isPromotional)
                             {
                                 promotionalContact.WriteLine(value + "[" + description + "]");
                             }
-                            if (isPromotional == false)
+                            if (!isPromotional)
                             {
                                 noPromotionalContact.WriteLine(value + "[" + description + "]");
                             }
