@@ -35,15 +35,15 @@ namespace Exercise13._1
                 Console.WriteLine(ex);
             }
 
-            //try
-            //{
-                //SaveBinaryToFile(listFraction);
-                //Console.WriteLine("Binary-файл сформирован");
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex);
-            //}
+            try
+            {
+                SaveBinaryToFile(listFraction);
+                Console.WriteLine("Binary-файл сформирован");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
             Console.WriteLine("Исходный список дробей");
             foreach (var f in listFraction)
@@ -58,12 +58,12 @@ namespace Exercise13._1
                 Console.WriteLine(f);
             }
 
-            //var listFractionFromBinary = LoadFromBinaryFile();
-            //Console.WriteLine("Список дробей из XML-файла");
-            //foreach (var f in listFractionFromBinary)
-            //{
-            //    Console.WriteLine(f);
-            //}
+            var listFractionFromBinary = LoadFromBinaryFile();
+            Console.WriteLine("Список дробей из Binary-файла");
+            foreach (var f in listFractionFromBinary)
+            {
+                Console.WriteLine(f);
+            }
 
 
             Console.ReadKey();
@@ -79,18 +79,15 @@ namespace Exercise13._1
             }
         }
 
-        //public static void SaveBinaryToFile(List<Fraction> fractions)
-        //{
-        //    using (var fs = new FileStream(@"E:\fraction.dat", FileMode.Create))
-        //    {
-        //        var formatted = new BinaryFormatter();
-        //        formatted.Serialize(fs, formatted);
-        //    }
-        //}
-            //Я идиот, но он выдает мне такую ошибку: Additional information:
-            //Тип "System.Runtime.Serialization.Formatters.Binary.BinaryFormatter"
-            //в сборке "mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" не помечен как сериализуемый.
-
+        public static void SaveBinaryToFile(List<Fraction> fractions)
+        {
+            using (var fs = new FileStream(@"E:\fraction.dat", FileMode.Create))
+            {
+                var formatted = new BinaryFormatter();
+                formatted.Serialize(fs, fractions);
+            }
+        }
+        
         public static List<Fraction> LoadFromXmlFile()
         {
             var writer = new XmlSerializer(typeof(List<Fraction>));
@@ -100,13 +97,13 @@ namespace Exercise13._1
             }
         }
 
-        //public static List<Fraction> LoadFromBinaryFile()
-        //{
-        //    var formatted = new BinaryFormatter();
-        //    using (var fs = new FileStream(@"E:\fraction.dat", FileMode.Open))
-        //    {
-        //        return (List<Fraction>)formatted.Deserialize(fs);
-        //    }
-        //}
+        public static List<Fraction> LoadFromBinaryFile()
+        {
+            var formatted = new BinaryFormatter();
+            using (var fs = new FileStream(@"E:\fraction.dat", FileMode.Open))
+            {
+                return (List<Fraction>)formatted.Deserialize(fs);
+            }
+        }
     }
 }
